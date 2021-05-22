@@ -7,4 +7,7 @@ class ApplicationsController < ApplicationController
     @application = Application.find(params[:id])
     @pets = Pet.search(params[:id])
   end
+
+  def new
+  end
 end
