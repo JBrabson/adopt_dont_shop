@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe "New Application" do
+RSpec.describe "New Application display page" do
   it "When I visit the pet index page, I can click a link to be taken to new application" do
     visit '/pets'
     expect(page).to have_link("Start an Application")

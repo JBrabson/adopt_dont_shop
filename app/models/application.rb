@@ -7,6 +7,6 @@ class Application < ApplicationRecord
 
   def default
     self.home_bio = " "
-    self.status = "Pending"
+    self.status = "In Progress"
   end
 end
