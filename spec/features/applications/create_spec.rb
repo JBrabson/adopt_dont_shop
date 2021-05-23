@@ -16,4 +16,11 @@ RSpec.describe "Create Application" do
     expect(page).to have_content("1234 Happy Lane")
     expect(page).to have_content("In Progress")
   end
+
+  it "I get an error message when I try to submit an incompleted form" do
+    visit '/applications/new'
+    expect(page).to_not have_content("ERROR: Missing required information.")
+    click_on 'Submit'
+    expect(page).to have_content("ERROR: Missing required information.")
+ end
 end

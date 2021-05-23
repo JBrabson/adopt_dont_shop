@@ -5,8 +5,8 @@ RSpec.describe "Applications Show page" do
     Shelter.destroy_all
     Application.destroy_all
     @dumb_friends = Shelter.create(name: 'Dumb Friends League', city: 'Denver, CO', foster_program: false, rank: 7)
-    @jennifer = Application.create!(name: "Jennifer Brabson", street_address: "1234 Oshtemo St.", city: "Denver", state: "CO", zip: 80003, status: "Pending", home_bio: "Old dogs need love, too.")
-    @jefferson = Application.create!(name: "Jefferson Thomas", street_address: "4321 Michigan St.", city: "Morrison", state: "CO", zip: 80002, status: "Pending", home_bio: "Animals are the worlds' angels.")
+    @jennifer = Application.create!(name: "Jennifer Brabson", street_address: "1234 Oshtemo St.", city: "Denver", state: "CO", zip: 80003, status: 1, home_bio: "Old dogs need love, too.")
+    @jefferson = Application.create!(name: "Jefferson Thomas", street_address: "4321 Michigan St.", city: "Morrison", state: "CO", zip: 80002, status: 1, home_bio: "Animals are the worlds' angels.")
     @dog_1 = @dumb_friends.pets.create!(adoptable: true, age: 1, breed: 'Pit Bull Mix', name: 'Nala', shelter_id: @dumb_friends.id)
     @cat_1 = @dumb_friends.pets.create!(adoptable: true, age: 3, breed: 'DSH', name: 'Goose', shelter_id: @dumb_friends.id)
     @dog_2 = @dumb_friends.pets.create!(adoptable: true, age: 5, breed: 'Lab Mix', name: 'Bee', shelter_id: @dumb_friends.id)

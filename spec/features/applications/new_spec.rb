@@ -13,4 +13,16 @@ RSpec.describe "New Application display page" do
     expect(find('form')).to have_content("Zip")
     expect(find('form')).to have_button("Submit")
   end
+
+  it "Creates application and redirects to application show page where attributes are displayed" do
+    visit '/applications/new'
+    fill_in "Name", with: "Haelyn"
+    fill_in "Street address", with: "777 Good Luck Lane"
+    fill_in "City", with: "Arvada"
+    fill_in "State", with: "CO"
+    fill_in "Zip", with: 80003
+    click_button "Submit"
+    expect(page).to have_content("Haelyn")
+    expect(page).to have_content("In Progress")
+  end
 end
