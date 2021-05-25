@@ -6,8 +6,8 @@ class CreateApplications < ActiveRecord::Migration[5.2]
       t.string :city
       t.string :state
       t.integer :zip
-      t.string :home_bio
-      t.integer :status
+      t.string :home_bio, default: "TBD"
+      t.integer :status, default: 0
 
       t.timestamps
     end

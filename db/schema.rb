@@ -21,8 +21,8 @@ ActiveRecord::Schema.define(version: 2021_05_22_141612) do
     t.string "city"
     t.string "state"
     t.integer "zip"
-    t.string "home_bio"
-    t.integer "status"
+    t.string "home_bio", default: "TBD"
+    t.integer "status", default: 0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

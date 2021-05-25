@@ -5,12 +5,13 @@ class Application < ApplicationRecord
   has_many :pet_applications, dependent: :destroy
   has_many :pets, through: :pet_applications
 
-  after_initialize  :default
-
   enum status: {"In Progress": 0, "Pending": 1, "Approved": 2, "Rejected": 3}
 
-  def default
-    self.home_bio = " "
-    self.status = 0
+  def adopted_pets(pet)
+    pets << pet
+  end
+
+  def pet_count
+    pets.count
   end
 end

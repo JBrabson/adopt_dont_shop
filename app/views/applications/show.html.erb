@@ -3,8 +3,63 @@
     <p><%= "Applicant Address: #{@application.street_address}, #{@application.city} #{@application.state} #{@application.zip}" %></p>
     <p><%= "Home Bio: #{@application.home_bio}"%></p>
     <p><%= "Application Status: #{@application.status}"%></p>
-  </ol>
-<br>
-<%@application.pets.each do |pet| %>
-<%= link_to "#{pet.name}", "/pets/#{pet.id}" %><br>
-<% end %>
+  <ol><br>
+
+    <% if @application.status == "Pending" %>
+      <h3>Pets to Adopt: </h3>
+      <% @pets.each do |pet| %>
+        <section>
+          <li>Name: <%= pet.name %></li><br>
+          <li>Age: <%= pet.age %></li><br>
+          <li>Breed: <%= pet.breed %></li><br>
+          <li>Adoptable: <%= pet.adoptable %></li>
+        </section>
+      <% end %>
+    <% end %><br>
+
+    <section>
+      <% if @application.status == "In Progress" %>
+      <h3>Add a Pet to this Application</h3>
+        <%= form_with url: "/applications/#{@application.id}", method: :get, local: true do |f| %>
+          <%= f.label :search %>
+          <%= f.text_field :search %><br><br>
+          <%= f.submit 'Search' %>
+        <% end %>
+    <% end %>
+    </section><br>
+
+    <% if params[:search] %>
+      <% @pet_search.each do |pet| %>
+        <section>
+          <li>Name: <%= pet.name %> <%= button_to "Adopt this Pet", "/applications/#{@application.id}", method: :get, params: {adopt: pet} %></li><br>
+          <li>Age: <%= pet.age %></li><br>
+          <li>Breed: <%= pet.breed %></li><br>
+          <li>Adoptable: <%= pet.adoptable %></li><br>
+        </section>
+      <% end %>
+    <% end %><br>
+
+    <% if params[:adopt] %>
+      <% @adopted_pets.each do |pet| %>
+        <section>
+          <li>Name: <%= pet.name %></li><br>
+          <li>Age: <%= pet.age %></li><br>
+          <li>Breed: <%= pet.breed %></li><br>
+          <li>Adoptable: <%= pet.adoptable %></li><br>
+        </section>
+      <% end %>
+    <% end %><br>
+
+    <% if @application.status != "Pending" %>
+    <% if @application.pet_count > 0 %>
+      <section>
+        <h3>Submit Application</h3>
+        <%= form_with url: "/applications/#{@application.id}", method: :patch, local: true do |f| %>
+          <%= f.hidden_field :status, value: "Pending" %>
+          <%= f.label :reason %>
+          <%= f.text_field :reason %><br><br>
+          <%= f.submit 'Submit Appplication' %>
+        <% end %>
+      </section>
+    <% end %>
+    <% end %><br>

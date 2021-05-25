@@ -15,14 +15,6 @@ PetApplication.destroy_all
 @dooke = @dpca.pets.create!(adoptable: true, age: 4, breed: 'Husky Lab Mix', name: 'Dooke', shelter_id: @dpca.id)
 @sammie = @dpca.pets.create!(adoptable: true, age: 12, breed: 'Jack Russell Terrier', name: 'Sammie', shelter_id: @dpca.id)
 
-@jennifer = Application.create!(name: "Jennifer Smith", street_address: "1234 Oshtemo St.", city: "Denver", state: "CO", zip: 80003, status: 1, home_bio: "Old dogs need love, too.")
-@jefferson = Application.create!(name: "Jefferson Thomas", street_address: "4321 Michigan St.", city: "Morrison", state: "CO", zip: 18112, status: 1, home_bio: "Animals are the worlds' angels.")
-@haelyn = Application.create!(name: "Haelyn Brabson", street_address: "777 Happy Street.", city: "Arvada", state: "CO", zip: 80003, status: 1, home_bio: "Who rescued who?")
-
-PetApplication.create!(application_id: @jennifer.id, pet_id: @sammie.id)
-PetApplication.create!(application_id: @jennifer.id, pet_id: @dooke.id)
-PetApplication.create!(application_id: @jennifer.id, pet_id: @sunni.id)
-PetApplication.create!(application_id: @jefferson.id, pet_id: @tag.id)
-PetApplication.create!(application_id: @haelyn.id, pet_id: @bee.id)
-PetApplication.create!(application_id: @haelyn.id, pet_id: @goose.id)
-PetApplication.create!(application_id: @haelyn.id, pet_id: @nala.id)
+@jennifer = Application.create!(name: "Jennifer Smith", street_address: "1234 Oshtemo St.", city: "Denver", state: "CO", zip: 80003)
+@jefferson = Application.create!(name: "Jefferson Thomas", street_address: "4321 Michigan St.", city: "Morrison", state: "CO", zip: 18112)
+@haelyn = Application.create!(name: "Haelyn Brabson", street_address: "777 Happy Street.", city: "Arvada", state: "CO", zip: 80003)
