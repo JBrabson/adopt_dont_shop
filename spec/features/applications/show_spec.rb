@@ -5,8 +5,8 @@ RSpec.describe "Applications Show page" do
     Shelter.destroy_all
     Application.destroy_all
     @dumb_friends = Shelter.create(name: 'Dumb Friends League', city: 'Denver, CO', foster_program: false, rank: 7)
-    @jennifer = Application.create!(name: "Jennifer Brabson", street_address: "1234 Oshtemo St.", city: "Denver", state: "CO", zip: 80003, status: 0, home_bio: "Old dogs need love, too.")
-    @jefferson = Application.create!(name: "Jefferson Thomas", street_address: "4321 Michigan St.", city: "Morrison", state: "CO", zip: 80002, status: 1, home_bio: "Animals are the worlds' angels.")
+    @jennifer = Application.create!(name: "Jennifer Brabson", street_address: "1234 Oshtemo St.", city: "Denver", state: "CO", zip: 80003)
+    @jefferson = Application.create!(name: "Jefferson Thomas", street_address: "4321 Michigan St.", city: "Morrison", state: "CO", zip: 80002)
     @dog_1 = @dumb_friends.pets.create!(adoptable: true, age: 1, breed: 'Pit Bull Mix', name: 'Nala', shelter_id: @dumb_friends.id)
     @cat_1 = @dumb_friends.pets.create!(adoptable: true, age: 3, breed: 'DSH', name: 'Goose', shelter_id: @dumb_friends.id)
     @dog_2 = @dumb_friends.pets.create!(adoptable: true, age: 5, breed: 'Lab Mix', name: 'Bee', shelter_id: @dumb_friends.id)
@@ -37,12 +37,10 @@ RSpec.describe "Applications Show page" do
 
   describe "if an application has not yet been submitted" do
     it "has feature to search for pets by name and add to application" do
-    aspca = Shelter.create(name: 'ASPCA', city: 'Denver, CO', foster_program: false, rank: 7)
-    jen = Application.create!(name: "Jen", street_address: "1234 Oshtemo St.", city: "Denver", state: "CO", zip: 80003)
-    jeff = Application.create!(name: "Jeff", street_address: "4321 Somewhere Lane", city: "Not Denver", state: "Not CO", zip: 30008, status: "Pending")
-    dog1 = aspca.pets.create!(adoptable: true, age: 1, breed: 'Pit Bull Mix', name: 'Nala', shelter_id: @dumb_friends.id)
-    cat1 = aspca.pets.create!(adoptable: true, age: 3, breed: 'DSH', name: 'Goose', shelter_id: @dumb_friends.id)
-    dog2 = aspca.pets.create!(adoptable: true, age: 5, breed: 'Lab Mix', name: 'Bee', shelter_id: @dumb_friends.id)
+      jen = Application.create!(name: "Jen", street_address: "1234 Oshtemo St.", city: "Denver", state: "CO", zip: 80003, status: 0)
+      jeff = Application.create!(name: "Jeff", street_address: "4321 Michigan St.", city: "Morrison", state: "CO", zip: 80002, status: 1)
+
+      visit "/applications/#{jen.id}"
       expect(page).to have_content("In Progress")
       expect(page).to have_content("Add a Pet to this Application")
       expect(page).to have_field("Search")
@@ -50,10 +48,23 @@ RSpec.describe "Applications Show page" do
       click_button "Search"
       expect(page).to have_content("Nala")
       expect(page).to_not have_content("Goose")
-      
+
       visit "/applications/#{jeff.id}"
       expect(page).to have_content("Pending")
       expect(page).to_not have_content("Add a Pet to this Application")
+    end
+  end
+
+  describe "I can add pet to my application" do
+    it "and am taken back to my application where I then see the pet I want to adopt" do
+      jen = Application.create!(name: "Jen", street_address: "1234 Oshtemo St.", city: "Denver", state: "CO", zip: 80003, status: 0)
+
+      visit "/applications/#{jen.id}"
+      fill_in "Search", with: "Nala"
+      click_button "Search"
+      expect(page).to have_content("Nala")
+      click_button "Adopt this Pet"
+      expect(page).to have_content("Nala")
     end
   end
 
