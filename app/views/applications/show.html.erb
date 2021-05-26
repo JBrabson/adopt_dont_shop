@@ -53,6 +53,7 @@
     <% if @application.status != "Pending" %>
     <% if @application.pet_count > 0 %>
       <section>
+        <h3>WEEEEEEEEEEEEE TESTING</h3>
         <h3>Submit Application</h3>
         <%= form_with url: "/applications/#{@application.id}", method: :patch, local: true do |f| %>
           <%= f.hidden_field :status, value: "Pending" %>
