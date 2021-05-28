@@ -27,29 +27,33 @@ describe "Applications Show page" do
   end
 
   it "displays search pets feature if application not yet been submitted" do
-      expect(current_path).to eq("/applications/#{@jennifer.id}")
-      expect(page).to have_field(:search)
-      fill_in "Search", with: "Nala"
-      click_button "Search"
+    expect(current_path).to eq("/applications/#{@jennifer.id}")
+    expect(page).to have_field(:search)
+    fill_in "Search", with: "Nala"
+    click_button "Search"
 
-      expect(current_path).to eq("/applications/#{@jennifer.id}")
-      expect(page).to have_content(@dog_1.name)
-      expect(page).to have_content(@dog_1.age)
-      expect(page).to have_content(@dog_1.breed)
-      expect(page).to have_content(@dog_1.adoptable)
-    end
+    expect(current_path).to eq("/applications/#{@jennifer.id}")
+    expect(page).to have_content(@dog_1.name)
+    expect(page).to have_content(@dog_1.age)
+    expect(page).to have_content(@dog_1.breed)
+    expect(page).to have_content(@dog_1.adoptable)
+  end
 
-  # describe "I can add pet to my application" do
-  #   it "and am taken back to my application where I then see the pet I want to adopt" do
-  #
-  #     visit "/applications/#{@jennifer.id}"
-  #     fill_in "Search", with: "Nala"
-  #     click_button "Search"
-  #     expect(page).to have_content("Nala")
-  #     click_button "Adopt this Pet"
-  #     expect(page).to have_content("Nala")
-  #     expect(page).to have_content("Submit Application")
-  #   end
-  # end
+  it "allows addition of pets to application with input for home bio and redirect to show page after submission" do
+    expect(current_path).to eq("/applications/#{@jennifer.id}")
+    fill_in "Search", with: "Nala"
+    click_button "Search"
+    click_button "Adopt this Pet"
+    expect(page).to have_content("Nala")
+    expect(page).to have_field("Reason")
+    expect(page).to have_button("Submit Application")
+    fill_in "Reason", with: "Look at that face!"
+    click_button "Submit Application"
+    expect(current_path).to eq("/applications/#{@jennifer.id}")
+    expect(page).to have_content("#{@dog_1.name}")
+    expect(page).to have_content("Pending")
+    expect(page).to_not have_content("TBD")
+    expect(page).to_not have_button("Search")
+  end
 
 end
