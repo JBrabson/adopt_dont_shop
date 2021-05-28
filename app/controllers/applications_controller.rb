@@ -7,8 +7,10 @@ class ApplicationsController < ApplicationController
     @application = Application.find(params[:id])
     if params[:adopt] && !@application.pets.include?(Pet.find(params[:adopt]))
       @adopted_pets = @application.adopted_pets(Pet.find(params[:adopt]))
+
     elsif params[:search]
       @pet_search = Pet.partial_search(params[:search])
+
     elsif @application.status == "Pending"
       @pets = @application.pets
     end
